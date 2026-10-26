@@ -1,31 +1,20 @@
-﻿# genpack-gate (}ticker) // PRODUCTION ARCHITECTURE BLUEPRINT
+# Genpack Gate — Verified Scope and Architecture Roadmap
 
-> **Canonical System ID**: QMOOSA-0880  
-> **Component Role**: TESTS  
-> **Institutional Reality Gate Compliance**: 100/100 VERIFIED  
+Canonical system ID: **QMOOSA-0880**. Component role: **TESTS**.
 
----
+## Current implementation
 
-## 1. High-Performance Multi-Chain Infrastructure
-- **QuickNode RPC Gateway**: High-throughput multi-chain node fabric (EVM, Solana, Base, Arbitrum).
-- **Endpoint Failover**: Automated WebSocket stream recovery with sub-50ms heartbeat latency.
+A Python local SDK artifact integrity verifier (`sdk_contract_gate.py`) checks manifest enumeration, relative-path safety, SHA-256 content integrity, symlink rejection, and unexpected files. The regression suite runs positive and adversarial tests against that implementation. Rust remains an informational scaffold.
 
-## 2. Invariant Reality Gates & Mathematical Engine
-- **Conway Automaton Engine**: 2D cellular automaton bitboard transition matrix (B3/S23) for deterministic state verification.
-- **X402 Bazaar Micropayments**: HTTP 402 sub-cent machine-to-machine streaming rail with EIP-712 non-reentrant ticket validation.
-- **Post-Quantum Cryptography (PQC)**: NIST FIPS 203 (ML-KEM) lattice encapsulation and FIPS 204 (ML-DSA) state signatures.
+## Planned, not implemented or certified
 
-## 3. Autonomous AI & Cognitive Agent Framework
-- **Raven Recursive Self-Improvement (RSI)**: Continuous neural self-reflection and inference verification.
-- **REA (Reasoning & Execution Agent)**: Actor-model cognitive task dispatcher.
-- **Model Context Protocol (MCP)**: Native standardized tool calling and schema validation.
+SDK generator engine integration, generated API semantics, package signing, reproducible provenance, cross-chain RPC, x402 settlement, Conway automation, PQC/FIPS cryptography, autonomous AI agents, and tokenomics are **not verified** by this component.
 
-## 4. Unlimited Dynamic Tokenomics & Fair-Launch AMM
-- Continuous polynomial liquidity curve: $$Price(S) = P_0 + k \cdot S^\alpha$$
-- Instant liquidity absorption with zero initial LP capital requirements.
+## Acceptance gates
 
-## 5. Security & Verification Harness
-- Automated Smoke Test (<30s runtime)
-- 10,000-cycle Invariant Regression Battery
-- Memory and Thread Sanitizers
-- GitHub Actions CodeQL Security Analysis CI
+1. Real generator output is exercised end-to-end by this gate and semantic SDK tests.
+2. Supply-chain provenance and signature verification are implemented and independently reviewed.
+3. CI passes at the relevant current commit, including negative tests and CodeQL.
+4. Security review approves the exact shipped implementation.
+
+No mainnet/testnet deployment, gas/cycles spending, or cryptographic certification is authorized by these checks.
