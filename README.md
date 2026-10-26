@@ -1,31 +1,34 @@
-﻿# Genpack Gate (ticker)
-> Autonomous Production-Grade Protocol
+# Genpack Gate — SDK Artifact Integrity Checks
 
-[![CI/CD Pipeline](https://github.com/elon00/genpack-gate/actions/workflows/ci-cd-pipeline.yml/badge.svg)](https://github.com/elon00/genpack-gate/actions)
-[![Score](https://img.shields.io/badge/Reality%20Gates-100%2F100%20GENUINE%20GREEN-2ea44f?style=flat-square)](#reality-check-verification)
-[![NIST PQC](https://img.shields.io/badge/Security-NIST%20FIPS%20203%20%26%20204-blue?style=flat-square)](#security)
-[![Verified](https://img.shields.io/badge/Status-100%25%20Verified-gold?style=flat-square)](#pillars)
+This repository is the **tests** component of QMOOSA-0880 (SDK generator family).
+It currently implements a **local file-integrity gate**, not a full SDK generator, blockchain relayer, x402 settlement system, PQC verifier, or production-ready service.
 
----
+## What is implemented
 
-## About Genpack Gate
-**Genpack Gate (\ticker)** is an autonomous, decentralized, post-quantum intelligence protocol engineered for production-grade operational efficiency and cryptographic trust.
+`sdk_contract_gate.py` validates a JSON manifest of generated SDK artifacts. Each entry has a relative POSIX `path` and lowercase SHA-256 `sha256`. The gate rejects path traversal, absolute paths, symlinks, duplicate paths, invalid hashes, missing files, unlisted files, and modified contents. It does **not** validate generated SDK API semantics, provenance of the generator, signature authenticity, or supply-chain trust.
 
----
+Example manifest:
 
-## Running the Protocol Locally
+```json
+{"files":[{"path":"client.ts","sha256":"<64 lowercase hex characters>"}]}
+```
 
-### 1. Execute Reality Check Harness (Python)
-``bash
+Run on a real artifact directory and manifest:
+
+```bash
+python sdk_contract_gate.py --root path/to/artifacts --manifest path/to/manifest.json
 python tests/reality_check_harness.py
-``
+python -m compileall -q sdk_contract_gate.py tests
+cargo test
+```
 
-### 2. Run the High-Performance Rust State Engine
-``bash
-cargo run
-``
+The test suite creates temporary local artifacts and runs positive and adversarial cases against the real gate. It does not connect to any RPC, spend funds, or deploy. GitHub Actions runs these tests and Python CodeQL analysis. A passing workflow establishes only the checked scope at that commit.
 
----
+## Unresolved blockers
 
-## Reality Check Verification
-Genpack Gate enforces strict pre-deployment verification: all invariants, cryptographic proofs, and micro-escrow contracts must achieve a **100/100 Genuine Green** rating before mainnet settlement.
+- No independently verified SDK-generation engine integration or semantic contract tests.
+- No signed build provenance or trusted artifact origin attestation.
+- No independent security audit, FIPS certification, production deployment, or readiness approval.
+- Rust binary is an informational scaffold, not an SDK generator.
+
+The original `100/100`, connected-RPC, and FIPS claims were unsupported and are not acceptance evidence.
